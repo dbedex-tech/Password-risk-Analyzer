@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Password Checker</title>
   <link rel="stylesheet" href="passwordchecker.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
 </head>
 
 <body>
@@ -26,9 +27,9 @@
     <button type="button" class="btn" onclick="document.getElementById('feedback-modal').showModal()">Check Safety</button>
       </div>
     </form>
-    <dialog class="pop-up" id="feedback-modal">
+    <dialog class="pop-up" id="feedback-modal" >
       <div id="response" open>
-        <h2>Results here ...</h2>
+        <p class="font">Results here ... </p>
         <hr />
         <div class="btns">
           <button type="button" class="pop-btn"  onclick="document.getElementById('feedback-modal').close()"> Close</button>
@@ -37,6 +38,9 @@
     </dialog>
   </div>
   </section>
+
+<script type="text/javascript" charset="utf-8" src="passwordchecker.js">
+</script>
 
 </body>
 
