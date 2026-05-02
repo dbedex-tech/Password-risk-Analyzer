@@ -37,20 +37,31 @@ I’m going with this. explain the role of the analyst critically.*/
 
 /*add entropy, zxcvbn using cloudfare*/
 
+//score 0 .... red
+//score 1.....orange
+//score 2......yellow
+//score 3......blue
+//score 4......green
+
 //Working on zxcvbn 
+
 const passwordInput=document.getElementById('check-password');
-passwordInput.addEventListener('input', () => {
-  const val = passwordInput.value;
-  
-  
-  if (!val) {
-    document.getElementById('guesses').textContent = "Type in a Password to Proceed";
-    return
-  }
+const testBtn = document.getElementById('test-btn');
+
+testBtn.addEventListener('click', () =>{
+const val = passwordInput.value;
+
+let bar = document.querySelector('.bar');
+let boxShadowColor = document.querySelector('.pop-up')
+if (!val) {
+  document.getElementById('guesses').textContent = "Type in a Password to Proceed";
+  bar.style.width = "0%"
+  boxShadowColor.style.setProperty("--box-glow", "#EDF600")
+  return
+
+}
 const result = zxcvbn(val);
 const score = result.score;
-let color = ""
-let width = 0
 const entropy = Math.log2(result.guesses)
 let feedback = ""
 if (score === 0 && entropy < 40) {//reject 
@@ -98,10 +109,36 @@ console.log(score);
 console.log(feedback);
 console.log(entropy);
 document.getElementById('guesses').textContent = `${feedback}`
+
+document.getElementById('feedback-modal').showModal()
 //document.getElementById('entropy').textContent = `Entropy Status: ${entropy}`
+  
+  let width = "0";
+  let backgroundColor = "";
+  let boxShadow = ""
+  if (entropy < 40) {
+    width = "20%";
+    backgroundColor = "red"
+    boxShadow = 'red'
+  } else if (entropy >= 40 && entropy <= 60) {
+    width = "40%";
+    backgroundColor = "orange"
+  } else if (entropy >= 60 && entropy <= 80) {
+    width = "60%";
+    backgroundColor = "yellow"
+  } else if (entropy >= 80 && entropy <= 100) {
+    width = "80%";
+    backgroundColor = "blue"
+  } else if (entropy > 100) {
+    width = "100%";
+    backgroundColor = "green"
+  }
+bar.style.width = width
+bar.style.backgroundColor = backgroundColor;
+boxShadowColor.style.setProperty("--box-glow", backgroundColor)
 });
-
-
+//console.log(width);
+//console.log(color);
 /*async function sha1(val) {
 const encoder = new TextEncoder()
 const data = encoder.encode(val)
